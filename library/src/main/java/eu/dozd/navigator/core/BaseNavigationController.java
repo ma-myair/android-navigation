@@ -218,8 +218,7 @@ public abstract class BaseNavigationController implements NavigationController<F
     }
 
     private void logBackwardRequest(BackwardRequest request) {
-        Log.d("Navigator", String.format("Consuming BACKWARD request for [%s]. immediate=%b, allowStateLoss=%b",
-                request.fragment.getClass().getName(),
+        Log.d("Navigator", String.format("Consuming BACKWARD request. immediate=%b, allowStateLoss=%b",
                 request.immediate,
                 request.allowStateLoss));
     }
