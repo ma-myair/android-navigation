@@ -10,6 +10,5 @@ public interface NavigatorController {
     /**
      * Returns navigation controller attached to activity.
      */
-    <F extends BaseRequest, B extends BaseRequest> NavigationController<F, B> getNavigationController();
-
+    NavigationController getNavigationController();
 }
