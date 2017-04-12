@@ -12,17 +12,17 @@ import android.view.View;
 
 import java.util.List;
 
+import eu.dozd.navigator.Navigator;
+import eu.dozd.navigator.core.NavigatorController;
 import eu.inloop.viewmodel.base.ViewModelBaseActivity;
 import eu.nerevar.sample.R;
 import eu.nerevar.sample.circle.CircleFragment;
 import eu.nerevar.sample.databinding.ActivityRootBinding;
-import eu.inloop.shapeshifter.core.ForwardMode;
-import eu.inloop.shapeshifter.core.IShapeshifter;
-import eu.inloop.shapeshifter.core.NavigationController;
-import eu.inloop.shapeshifter.core.Shapeshifter;
+import eu.dozd.navigator.core.ForwardMode;
+import eu.dozd.navigator.core.NavigationController;
 
 public class RootActivity extends ViewModelBaseActivity<RootView, RootViewModel>
-        implements RootView, IShapeshifter {
+        implements RootView, NavigatorController {
 
     private final NavigationController navigationController = new SampleNavigationController(R.id.frameLayout, "root_activity_root_tag");
 
@@ -43,7 +43,7 @@ public class RootActivity extends ViewModelBaseActivity<RootView, RootViewModel>
 
         if (savedInstanceState == null) {
             binding.navigation.setCheckedItem(R.id.nav_fragment_transitions);
-            Shapeshifter.with(this)
+            Navigator.with(this)
                     .forward()
                     .setFragment(CircleFragment.newInstance())
                     .navigate(ForwardMode.REPLACEMENT);

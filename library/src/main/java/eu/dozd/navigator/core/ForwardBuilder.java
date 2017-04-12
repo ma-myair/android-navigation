@@ -1,4 +1,4 @@
-package eu.inloop.shapeshifter.core;
+package eu.dozd.navigator.core;
 
 
 import android.annotation.TargetApi;
@@ -14,7 +14,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.inloop.shapeshifter.utils.ShapeshifterConstants;
+import eu.dozd.navigator.utils.Constants;
 
 /**
  * Default forward builder for creating a {@link ForwardRequest} used by {@link BaseNavigationController}.
@@ -33,6 +33,8 @@ public class ForwardBuilder extends BaseBuilder<ForwardBuilder, ForwardRequest, 
     boolean allowEnterTransitionOverlap;
     boolean allowReturnTransitionOverlap;
     boolean replaceSameFragment;
+    boolean addToBackStack = true;
+    ForwardMode mode;
 
     String root;
 
@@ -47,21 +49,9 @@ public class ForwardBuilder extends BaseBuilder<ForwardBuilder, ForwardRequest, 
         }
 
         initArguments();
+        this.mode = mode;
 
-        switch (mode) {
-            case ADDITION:
-                navigationController.navigateByAddition(new ForwardRequest(this));
-                break;
-            case REPLACEMENT:
-                navigationController.navigateByReplacement(new ForwardRequest(this));
-                break;
-            case WITHOUT_REPLACEMENT:
-                navigationController.navigateWithoutReplacement(new ForwardRequest(this));
-                break;
-            case NEW:
-                navigationController.navigateToNewRoot(new ForwardRequest(this));
-                break;
-        }
+        navigationController.navigate(new ForwardRequest(this));
     }
 
     @Override
@@ -80,7 +70,6 @@ public class ForwardBuilder extends BaseBuilder<ForwardBuilder, ForwardRequest, 
         };
     }
 
-
     @Override
     protected ForwardBuilder self() {
         return this;
@@ -89,13 +78,13 @@ public class ForwardBuilder extends BaseBuilder<ForwardBuilder, ForwardRequest, 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public ForwardBuilder addSharedElement(View view, String string) {
         this.sharedElements.add(new Pair<>(view, string));
-        return this;
+        return self();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public ForwardBuilder addSharedElements(List<Pair<View, String>> elements) {
         this.sharedElements.addAll(elements);
-        return this;
+        return self();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -202,16 +191,21 @@ public class ForwardBuilder extends BaseBuilder<ForwardBuilder, ForwardRequest, 
         return self();
     }
 
+    public ForwardBuilder noBackStack() {
+        this.addToBackStack = false;
+        return self();
+    }
+
     /**
      * Init fragment arguments
      */
     protected void initArguments() {
         if (fragment.getArguments() == null) {
             final Bundle arg = new Bundle(1);
-            arg.putString(ShapeshifterConstants.ARG_FRAGMENT_ROOT, root);
+            arg.putString(Constants.ARG_FRAGMENT_ROOT, root);
             fragment.setArguments(arg);
         } else {
-            fragment.getArguments().putString(ShapeshifterConstants.ARG_FRAGMENT_ROOT, root);
+            fragment.getArguments().putString(Constants.ARG_FRAGMENT_ROOT, root);
         }
     }
 }

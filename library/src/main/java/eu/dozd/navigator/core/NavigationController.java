@@ -1,4 +1,4 @@
-package eu.inloop.shapeshifter.core;
+package eu.dozd.navigator.core;
 
 /**
  * Prescription for navigation controller
@@ -9,24 +9,9 @@ package eu.inloop.shapeshifter.core;
 public interface NavigationController<F extends BaseRequest, B extends BaseRequest> {
 
     /**
-     * Navigate to fragment by addition
+     * Navigate to fragment according forward request
      */
-    void navigateByAddition(F request);
-
-    /**
-     * Navigate to fragment by replacement
-     */
-    void navigateByReplacement(F request);
-
-    /**
-     * Navigate to fragment without replacement
-     */
-    void navigateWithoutReplacement(F request);
-
-    /**
-     * Navigate to new fragment and pop all previous ones
-     */
-    void navigateToNewRoot(F request);
+    void navigate(F request);
 
     /**
      * Navigate to fragment's specified root

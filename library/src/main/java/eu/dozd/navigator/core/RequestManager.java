@@ -1,4 +1,4 @@
-package eu.inloop.shapeshifter.core;
+package eu.dozd.navigator.core;
 
 
 import android.support.annotation.NonNull;
@@ -24,7 +24,7 @@ public final class RequestManager {
      *
      * @param activity to handle navigation operations
      */
-    RequestManager(AppCompatActivity activity) {
+    public RequestManager(AppCompatActivity activity) {
         this.activity = activity;
     }
 
@@ -86,13 +86,13 @@ public final class RequestManager {
         try {
             instance = clazz.getDeclaredConstructor(AppCompatActivity.class).newInstance(activity);
         } catch (InstantiationException e) {
-            Log.e("Shapeshifter", "Could not instantiate builder", e);
+            Log.e("Navigator", "Could not instantiate builder", e);
         } catch (IllegalAccessException e) {
-            Log.e("Shapeshifter", "Could not access class " + clazz.getName(), e);
+            Log.e("Navigator", "Could not access class " + clazz.getName(), e);
         } catch (NoSuchMethodException e) {
-            Log.e("Shapeshifter", "Could not find such method of" + clazz.getName(), e);
+            Log.e("Navigator", "Could not find such method of" + clazz.getName(), e);
         } catch (InvocationTargetException e) {
-            Log.e("Shapeshifter", "Error of invocation of " + clazz.getName() + " class' method", e);
+            Log.e("Navigator", "Error of invocation of " + clazz.getName() + " class' method", e);
         }
 
         return instance;

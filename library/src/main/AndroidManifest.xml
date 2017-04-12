@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="eu.inloop.shapeshifter">
+    package="eu.inloop.navigator">
 
     <application
         android:allowBackup="true"

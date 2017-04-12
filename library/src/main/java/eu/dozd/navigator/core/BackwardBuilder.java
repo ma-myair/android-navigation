@@ -1,10 +1,10 @@
-package eu.inloop.shapeshifter.core;
+package eu.dozd.navigator.core;
 
 
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
-import eu.inloop.shapeshifter.utils.ShapeshifterConstants;
+import eu.dozd.navigator.utils.Constants;
 
 /**
  * Default backward builder for creating a {@link BackwardRequest} used by {@link BaseNavigationController}.
@@ -55,6 +55,6 @@ public class BackwardBuilder extends BaseBuilder<BackwardBuilder, BackwardReques
             return;
         }
 
-        this.root = fragment.getArguments().getString(ShapeshifterConstants.ARG_FRAGMENT_ROOT);
+        this.root = fragment.getArguments().getString(Constants.ARG_FRAGMENT_ROOT);
     }
 }

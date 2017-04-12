@@ -1,11 +1,11 @@
-package eu.inloop.shapeshifter.core;
+package eu.dozd.navigator.core;
 
 
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
-import eu.inloop.shapeshifter.utils.Utils;
+import eu.dozd.navigator.utils.Utils;
 
 /**
  * Base class for navigation builder

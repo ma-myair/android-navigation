@@ -1,4 +1,4 @@
-package eu.inloop.shapeshifter.utils;
+package eu.dozd.navigator.utils;
 
 
 import android.app.Activity;
@@ -7,22 +7,23 @@ import android.support.annotation.Nullable;
 
 import java.util.List;
 
-import eu.inloop.shapeshifter.core.NavigationController;
-import eu.inloop.shapeshifter.core.IShapeshifter;
+import eu.dozd.navigator.core.BaseRequest;
+import eu.dozd.navigator.core.NavigationController;
+import eu.dozd.navigator.core.NavigatorController;
 
 public class Utils {
 
     @NonNull
-    public static NavigationController getNavigationController(Activity activity) {
+    public static <F extends BaseRequest, B extends BaseRequest> NavigationController<F, B> getNavigationController(Activity activity) {
         if (activity == null) {
             throw new IllegalArgumentException("Activity cannot be null");
         }
 
-        if (!(activity instanceof IShapeshifter)) {
-            throw new RuntimeException("Activity must implement IShapeshifter");
+        if (!(activity instanceof NavigatorController)) {
+            throw new RuntimeException("Activity must implement NavigatorController");
         }
 
-        return ((IShapeshifter) activity).getNavigationController();
+        return ((NavigatorController) activity).getNavigationController();
     }
 
     @Nullable

@@ -1,4 +1,4 @@
-package eu.inloop.shapeshifter.core;
+package eu.dozd.navigator.core;
 
 
 import android.support.v4.app.Fragment;

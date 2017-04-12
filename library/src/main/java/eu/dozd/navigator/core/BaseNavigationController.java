@@ -1,4 +1,4 @@
-package eu.inloop.shapeshifter.core;
+package eu.dozd.navigator.core;
 
 
 import android.support.annotation.IdRes;
@@ -17,7 +17,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.inloop.shapeshifter.utils.Utils;
+import eu.dozd.navigator.utils.Utils;
 
 import static android.support.v4.app.FragmentTransaction.TRANSIT_FRAGMENT_CLOSE;
 import static android.support.v4.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE;
@@ -31,66 +31,42 @@ import static android.support.v4.app.FragmentTransaction.TRANSIT_NONE;
 public abstract class BaseNavigationController implements NavigationController<ForwardRequest, BackwardRequest> {
 
     @Override
-    public void navigateByAddition(ForwardRequest request) {
+    public void navigate(ForwardRequest request) {
         // log request
-        logForwardRequest(request, true);
+        logForwardRequest(request, request.addToBackStack);
         // set animations
         setAnimations(request);
-        // add fragment
-        addFragment(request, true);
-    }
+        // make fragment transaction
+        if (request.mode == ForwardMode.NEW) {
+            final FragmentManager fragmentManager = request.activity.getSupportFragmentManager();
 
-    @Override
-    public void navigateByReplacement(ForwardRequest request) {
-        // log request
-        logForwardRequest(request, false);
-        // set animations
-        setAnimations(request);
-        // replace fragment
-        replaceFragment(request, false);
-    }
+            // pop all fragments
+            if (fragmentManager.getBackStackEntryCount() > 0) {
+                if (request.immediate) {
+                    while (fragmentManager.getBackStackEntryCount() > 0) {
+                        fragmentManager.popBackStackImmediate();
+                    }
+                } else {
+                    final int count = fragmentManager.getBackStackEntryCount();
 
-    @Override
-    public void navigateWithoutReplacement(ForwardRequest request) {
-        // log request
-        logForwardRequest(request, true);
-        // set animations
-        setAnimations(request);
-        // replace fragment
-        replaceFragment(request, true);
-    }
+                    for (int i = 0; i < count; i++) {
+                        fragmentManager.popBackStack();
+                    }
+                }
+            }
 
-    @Override
-    public void navigateToNewRoot(ForwardRequest request) {
-        logForwardRequest(request, false);
-
-        final FragmentManager fragmentManager = request.activity.getSupportFragmentManager();
-
-        // pop all fragments
-        if (fragmentManager.getBackStackEntryCount() > 0) {
-            if (request.immediate) {
-                while (fragmentManager.getBackStackEntryCount() > 0) {
-                    fragmentManager.popBackStackImmediate();
+            // replace fragment if allowed and is the same class
+            if (request.replaceSameFragment && fragmentManager.findFragmentByTag(getRootTag()) != null) {
+                if (!fragmentManager.findFragmentByTag(getRootTag()).getClass().equals(request.fragment.getClass())) {
+                    fragmentTransaction(request);
                 }
             } else {
-                final int count = fragmentManager.getBackStackEntryCount();
-
-                for (int i = 0; i < count; i++) {
-                    fragmentManager.popBackStack();
-                }
-            }
-        }
-
-        // replace fragment if allowed and is the same class
-        if (request.replaceSameFragment && fragmentManager.findFragmentByTag(getRootTag()) != null) {
-            if (!fragmentManager.findFragmentByTag(getRootTag()).getClass().equals(request.fragment.getClass())) {
-                replaceFragment(request, false);
+                // replace fragment
+                fragmentTransaction(request);
             }
         } else {
-            // replace fragment
-            replaceFragment(request, false);
+            fragmentTransaction(request);
         }
-
     }
 
     @Override
@@ -161,8 +137,7 @@ public abstract class BaseNavigationController implements NavigationController<F
         return false;
     }
 
-    protected void replaceFragment(final ForwardRequest request,
-                                   final boolean addToBackStack) {
+    protected void fragmentTransaction(final ForwardRequest request) {
         // create fragment transaction
         final FragmentTransaction ft = request.activity.getSupportFragmentManager().beginTransaction();
 
@@ -171,49 +146,17 @@ public abstract class BaseNavigationController implements NavigationController<F
             ft.setTransition(getFragmentTransition());
         }
 
-        // replace fragment
-        ft.replace(getContainerId(), request.fragment, getRootTag());
-
-        addSharedElements(request, ft);
-
-        // add to backstack ?
-        if (addToBackStack) {
-            ft.addToBackStack(request.fragment.getClass().getName());
-        }
-
-        // commit
-        if (request.immediate) {
-            if (request.allowStateLoss) {
-                ft.commitNowAllowingStateLoss();
-            } else {
-                ft.commitNow();
-            }
+        // add/replace fragment
+        if (request.mode == ForwardMode.ADDITION) {
+            ft.add(getContainerId(), request.fragment, getRootTag());
         } else {
-            if (request.allowStateLoss) {
-                ft.commitAllowingStateLoss();
-            } else {
-                ft.commit();
-            }
+            ft.replace(getContainerId(), request.fragment, getRootTag());
         }
-    }
-
-    protected void addFragment(final ForwardRequest request,
-                               final boolean addToBackStack) {
-        // create fragment transaction
-        final FragmentTransaction ft = request.activity.getSupportFragmentManager().beginTransaction();
-
-        // set transition
-        if (getFragmentTransition() != TRANSIT_NONE) {
-            ft.setTransition(getFragmentTransition());
-        }
-
-        // add fragment
-        ft.add(getContainerId(), request.fragment, request.fragment.getClass().getName());
 
         addSharedElements(request, ft);
 
         // add to backstack ?
-        if (addToBackStack) {
+        if (request.addToBackStack) {
             ft.addToBackStack(request.fragment.getClass().getName());
         }
 
@@ -266,7 +209,7 @@ public abstract class BaseNavigationController implements NavigationController<F
             strings.add(pair.second);
         }
 
-        Log.d("Shapeshifter", String.format("Consuming FORWARD request for [%s]. addToBackStack=%b, immediate=%b, allowStateLoss=%b, sharedElements=[%s]",
+        Log.d("Navigator", String.format("Consuming FORWARD request for [%s]. addToBackStack=%b, immediate=%b, allowStateLoss=%b, sharedElements=[%s]",
                 request.fragment.getClass().getName(),
                 addToBackStack,
                 request.immediate,
@@ -275,7 +218,7 @@ public abstract class BaseNavigationController implements NavigationController<F
     }
 
     private void logBackwardRequest(BackwardRequest request) {
-        Log.d("Shapeshifter", String.format("Consuming BACKWARD request for [%s]. immediate=%b, allowStateLoss=%b",
+        Log.d("Navigator", String.format("Consuming BACKWARD request for [%s]. immediate=%b, allowStateLoss=%b",
                 request.fragment.getClass().getName(),
                 request.immediate,
                 request.allowStateLoss));

@@ -4,11 +4,11 @@ package eu.nerevar.sample.core;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 
+import eu.dozd.navigator.Navigator;
 import eu.nerevar.sample.R;
 import eu.nerevar.sample.base.BaseViewModel;
 import eu.nerevar.sample.circle.CircleFragment;
-import eu.inloop.shapeshifter.core.ForwardMode;
-import eu.inloop.shapeshifter.core.Shapeshifter;
+import eu.dozd.navigator.core.ForwardMode;
 
 public class RootViewModel extends BaseViewModel<RootView> {
 
@@ -28,7 +28,7 @@ public class RootViewModel extends BaseViewModel<RootView> {
         }
 
         // navigate to new root
-        Shapeshifter.with(getActivity())
+        Navigator.with(getActivity())
                 .forward()
                 .setFragment(fragment)
                 .navigate(ForwardMode.NEW);

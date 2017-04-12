@@ -1,4 +1,4 @@
-package eu.inloop.shapeshifter.core;
+package eu.dozd.navigator;
 
 
 import android.app.Activity;
@@ -6,12 +6,14 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
+import eu.dozd.navigator.core.RequestManager;
+
 /**
  * A singleton to represent a simple static interface for building navigation requests with {@link RequestManager}.
  */
-public final class Shapeshifter {
+public final class Navigator {
 
-    private Shapeshifter() {
+    private Navigator() {
         // empty & unused constructor
     }
 

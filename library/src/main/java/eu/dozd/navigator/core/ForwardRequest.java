@@ -1,4 +1,4 @@
-package eu.inloop.shapeshifter.core;
+package eu.dozd.navigator.core;
 
 import android.support.v4.util.Pair;
 import android.view.View;
@@ -11,18 +11,20 @@ import java.util.List;
  */
 public class ForwardRequest extends BaseRequest {
 
-    public final List<Pair<View, String>> sharedElements = new ArrayList<>();
+    final List<Pair<View, String>> sharedElements = new ArrayList<>();
 
-    public final Object enterTransition;
-    public final Object exitTransition;
-    public final Object reenterTransition;
-    public final Object returnTransition;
-    public final Object sharedElementEnterTransition;
-    public final Object sharedElementReturnTransition;
-    public final boolean allowEnterTransitionOverlap;
-    public final boolean allowReturnTransitionOverlap;
-    public final boolean replaceSameFragment;
-    public final String root;
+    final Object enterTransition;
+    final Object exitTransition;
+    final Object reenterTransition;
+    final Object returnTransition;
+    final Object sharedElementEnterTransition;
+    final Object sharedElementReturnTransition;
+    final boolean allowEnterTransitionOverlap;
+    final boolean allowReturnTransitionOverlap;
+    final boolean replaceSameFragment;
+    final boolean addToBackStack;
+    final ForwardMode mode;
+    private final String root;
 
     ForwardRequest(ForwardBuilder builder) {
         super(builder);
@@ -37,6 +39,8 @@ public class ForwardRequest extends BaseRequest {
         this.allowEnterTransitionOverlap = builder.allowEnterTransitionOverlap;
         this.allowReturnTransitionOverlap = builder.allowReturnTransitionOverlap;
         this.replaceSameFragment = builder.replaceSameFragment;
+        this.addToBackStack = builder.addToBackStack;
+        this.mode = builder.mode;
         this.root = builder.root;
     }
 }

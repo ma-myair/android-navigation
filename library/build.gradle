@@ -1,5 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'maven'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.github.dcendents.android-maven'
 
 android {
     compileSdkVersion 25
@@ -22,35 +24,53 @@ android {
     }
 }
 
+
+group = PUBLISH_GROUP_ID // Change this to match your package name
+version = VERSION_NAME
+project.archivesBaseName = PUBLISH_ARTIFACT_ID
+
 dependencies {
     compile "com.android.support:appcompat-v7:$supportLibVersion"
 }
 
-task androidJavadocs(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
-
-task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
-    classifier = 'javadoc'
-    from androidJavadocs.destinationDir
-}
-
-task androidSourcesJar(type: Jar) {
-    classifier = 'sources'
+task generateSourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
 }
+
+task generateJavadocs(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath()
+            .join(File.pathSeparator))
+}
+
+task generateJavadocsJar(type: Jar) {
+    from generateJavadocs.destinationDir
+    classifier 'javadoc'
+}
+
+generateJavadocsJar.dependsOn generateJavadocs
 
 artifacts {
-    archives androidSourcesJar
-//    archives androidJavadocsJar
+//    archives generateJavaDocsJar
+    archives generateSourcesJar
 }
 
-uploadArchives {
-    repositories.mavenDeployer {
-        pom.groupId = PUBLISH_GROUP_ID
-        pom.artifactId = PUBLISH_ARTIFACT_ID
-        pom.version = VERSION_NAME
-        repository(url: "file://${System.env.HOME}/.m2/repository")
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+    configurations = ['archives']
+    pkg {
+        repo = 'maven'
+        name = 'eu.dozd.navigator'
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/dozd/android-navigation'
+
+        version {
+            name = VERSION_NAME
+            released  = new Date()
+            vcsTag = VERSION_NAME
+        }
     }
 }
+

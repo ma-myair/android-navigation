@@ -12,8 +12,8 @@ import java.util.Random;
 
 import eu.nerevar.sample.base.BaseViewModel;
 import eu.nerevar.sample.utils.TransitionUtils;
-import eu.inloop.shapeshifter.core.ForwardMode;
-import eu.inloop.shapeshifter.core.Shapeshifter;
+import eu.dozd.navigator.core.ForwardMode;
+import eu.dozd.navigator.Navigator;
 
 public class CircleViewModel extends BaseViewModel<CircleView> {
 
@@ -73,7 +73,7 @@ public class CircleViewModel extends BaseViewModel<CircleView> {
 
         final ChangeBounds changeBoundsTransition = TransitionUtils.changeBoundsAnimation(CircleModel.TRANSITION_DURATION);
 
-        Shapeshifter.with(getActivity())
+        Navigator.with(getActivity())
                 .forward()
                 .setFragment(CircleFragment.newInstance())
                 .setSharedElementEnterTransition(changeBoundsTransition)
@@ -81,7 +81,8 @@ public class CircleViewModel extends BaseViewModel<CircleView> {
                 .addSharedElements(requestSharedElements())
                 .setAllowReturnTransitionOverlap(true)
                 .setAllowEnterTransitionOverlap(true)
-                .navigate(ForwardMode.WITHOUT_REPLACEMENT);
+                .noBackStack()
+                .navigate(ForwardMode.REPLACEMENT);
     }
 
     CircleModel getModel() {

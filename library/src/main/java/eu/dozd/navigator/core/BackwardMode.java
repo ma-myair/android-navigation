@@ -1,4 +1,4 @@
-package eu.inloop.shapeshifter.core;
+package eu.dozd.navigator.core;
 
 /**
  * Default backward navigation mode for {@link BaseNavigationController} built by a {@link BackwardBuilder}.
