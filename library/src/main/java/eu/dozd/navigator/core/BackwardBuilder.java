@@ -50,6 +50,11 @@ public class BackwardBuilder extends BaseBuilder<BackwardBuilder, BackwardReques
         return this;
     }
 
+    public BackwardBuilder setRoot(String root) {
+        this.root = root;
+        return self();
+    }
+
     protected void init() {
         if (fragment == null || fragment.getArguments() == null) {
             return;
