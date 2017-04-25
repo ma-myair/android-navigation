@@ -20,7 +20,7 @@ allprojects {
 ext {
     supportLibVersion = '25.3.1'
 
-    VERSION_NAME = "1.0.3"
+    VERSION_NAME = "1.0.4"
 
     PUBLISH_GROUP_ID = 'eu.dozd'
     PUBLISH_ARTIFACT_ID = 'navigator'

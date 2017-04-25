@@ -50,8 +50,8 @@ public class BackwardBuilder extends BaseBuilder<BackwardBuilder, BackwardReques
         return this;
     }
 
-    public BackwardBuilder setRoot(String root) {
-        this.root = root;
+    public BackwardBuilder setRoot(Class<?> clazz) {
+        this.root = clazz.getName();
         return self();
     }
 

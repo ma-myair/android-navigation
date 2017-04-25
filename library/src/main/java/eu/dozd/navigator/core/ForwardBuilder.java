@@ -3,7 +3,6 @@ package eu.dozd.navigator.core;
 
 import android.annotation.TargetApi;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.TransitionRes;
 import android.support.v4.util.Pair;
@@ -13,8 +12,6 @@ import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import eu.dozd.navigator.utils.Constants;
 
 /**
  * Default forward builder for creating a {@link ForwardRequest} used by {@link BaseNavigationController}.
@@ -36,8 +33,6 @@ public class ForwardBuilder extends BaseBuilder<ForwardBuilder, ForwardRequest, 
     boolean addToBackStack = true;
     ForwardMode mode;
 
-    String root;
-
     ForwardBuilder(@NonNull final AppCompatActivity activity) {
         super(activity);
     }
@@ -48,7 +43,6 @@ public class ForwardBuilder extends BaseBuilder<ForwardBuilder, ForwardRequest, 
             throw new IllegalStateException("Fragment cannot be null");
         }
 
-        initArguments();
         this.mode = mode;
 
         navigationController.navigate(new ForwardRequest(this));
@@ -59,8 +53,6 @@ public class ForwardBuilder extends BaseBuilder<ForwardBuilder, ForwardRequest, 
         if (fragment == null) {
             throw new IllegalStateException("Fragment cannot be null");
         }
-
-        initArguments();
 
         new Runnable() {
             @Override
@@ -186,26 +178,8 @@ public class ForwardBuilder extends BaseBuilder<ForwardBuilder, ForwardRequest, 
         return self();
     }
 
-    public ForwardBuilder setRoot(String root) {
-        this.root = root;
-        return self();
-    }
-
     public ForwardBuilder noBackStack() {
         this.addToBackStack = false;
         return self();
-    }
-
-    /**
-     * Init fragment arguments
-     */
-    protected void initArguments() {
-        if (fragment.getArguments() == null) {
-            final Bundle arg = new Bundle(1);
-            arg.putString(Constants.ARG_FRAGMENT_ROOT, root);
-            fragment.setArguments(arg);
-        } else {
-            fragment.getArguments().putString(Constants.ARG_FRAGMENT_ROOT, root);
-        }
     }
 }

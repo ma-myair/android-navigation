@@ -80,9 +80,9 @@ public abstract class BaseNavigationController implements NavigationController<F
         final FragmentManager fragmentManager = request.activity.getSupportFragmentManager();
 
         if (request.immediate) {
-            fragmentManager.popBackStackImmediate(request.root, 0);
+            fragmentManager.popBackStackImmediate(request.root, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         } else {
-            fragmentManager.popBackStack(request.root, 0);
+            fragmentManager.popBackStack(request.root, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
 
         return false;
