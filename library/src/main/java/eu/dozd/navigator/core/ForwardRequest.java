@@ -25,6 +25,8 @@ public class ForwardRequest extends BaseRequest {
     final boolean addToBackStack;
     final ForwardMode mode;
     final String root;
+    final int exitAnimation;
+    final int enterAnimation;
 
     ForwardRequest(ForwardBuilder builder) {
         super(builder);
@@ -42,5 +44,7 @@ public class ForwardRequest extends BaseRequest {
         this.addToBackStack = builder.addToBackStack;
         this.mode = builder.mode;
         this.root = builder.root;
+        this.enterAnimation = builder.enterAnimation;
+        this.exitAnimation = builder.exitAnimation;
     }
 }

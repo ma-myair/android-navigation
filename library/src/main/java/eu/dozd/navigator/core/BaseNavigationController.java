@@ -160,6 +160,10 @@ public abstract class BaseNavigationController implements NavigationController<F
             ft.addToBackStack(request.root);
         }
 
+        if (request.enterAnimation > 0 && request.exitAnimation > 0) {
+            ft.setCustomAnimations(request.enterAnimation, request.exitAnimation);
+        }
+
         // commit
         if (request.immediate) {
             if (request.allowStateLoss) {
