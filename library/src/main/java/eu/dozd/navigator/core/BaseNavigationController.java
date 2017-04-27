@@ -157,7 +157,7 @@ public abstract class BaseNavigationController implements NavigationController<F
 
         // add to backstack ?
         if (request.addToBackStack) {
-            ft.addToBackStack(request.fragment.getClass().getName());
+            ft.addToBackStack(request.root);
         }
 
         // commit

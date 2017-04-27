@@ -24,6 +24,7 @@ public class ForwardRequest extends BaseRequest {
     final boolean replaceSameFragment;
     final boolean addToBackStack;
     final ForwardMode mode;
+    final String root;
 
     ForwardRequest(ForwardBuilder builder) {
         super(builder);
@@ -40,5 +41,6 @@ public class ForwardRequest extends BaseRequest {
         this.replaceSameFragment = builder.replaceSameFragment;
         this.addToBackStack = builder.addToBackStack;
         this.mode = builder.mode;
+        this.root = builder.root;
     }
 }

@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.TransitionRes;
+import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.TransitionInflater;
@@ -32,6 +33,7 @@ public class ForwardBuilder extends BaseBuilder<ForwardBuilder, ForwardRequest, 
     boolean replaceSameFragment;
     boolean addToBackStack = true;
     ForwardMode mode;
+    String root;
 
     ForwardBuilder(@NonNull final AppCompatActivity activity) {
         super(activity);
@@ -181,5 +183,14 @@ public class ForwardBuilder extends BaseBuilder<ForwardBuilder, ForwardRequest, 
     public ForwardBuilder noBackStack() {
         this.addToBackStack = false;
         return self();
+    }
+
+    public ForwardBuilder setRoot(Class<?> clazz) {
+        this.root = clazz.getClass().getName();
+        return self();
+    }
+
+    public ForwardBuilder setRoot(Fragment fragment) {
+        return setRoot(fragment.getClass());
     }
 }
