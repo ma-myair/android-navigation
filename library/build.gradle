@@ -1,76 +1,41 @@
 apply plugin: 'com.android.library'
-apply plugin: 'maven'
-apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.github.dcendents.android-maven'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 1
-        versionName VERSION_NAME
+        versionName "1.0.9"
     }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
-        incremental false
     }
 
     buildTypes {
-    }
-}
-
-
-group = PUBLISH_GROUP_ID // Change this to match your package name
-version = VERSION_NAME
-project.archivesBaseName = PUBLISH_ARTIFACT_ID
-
-dependencies {
-    compile "com.android.support:appcompat-v7:$supportLibVersion"
-}
-
-task generateSourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier 'sources'
-}
-
-task generateJavadocs(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath()
-            .join(File.pathSeparator))
-}
-
-task generateJavadocsJar(type: Jar) {
-    from generateJavadocs.destinationDir
-    classifier 'javadoc'
-}
-
-generateJavadocsJar.dependsOn generateJavadocs
-
-artifacts {
-//    archives generateJavaDocsJar
-    archives generateSourcesJar
-}
-
-bintray {
-    user = System.getenv('BINTRAY_USER')
-    key = System.getenv('BINTRAY_KEY')
-    configurations = ['archives']
-    pkg {
-        repo = 'maven'
-        name = 'eu.dozd.navigator'
-        licenses = ['Apache-2.0']
-        vcsUrl = 'https://github.com/dozd/android-navigation'
-
-        version {
-            name = VERSION_NAME
-            released = new Date()
-            vcsTag = VERSION_NAME
+        release {
+            minifyEnabled false
         }
     }
 }
 
+dependencies {
+    // support library
+    compile "com.android.support:appcompat-v7:$supportLibVersion"
+    compile "com.android.support:support-annotations:$supportLibVersion"
+    compile "com.android.support:design:$supportLibVersion"
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+artifacts {
+    archives sourcesJar
+}
