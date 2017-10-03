@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "eu.nerevar.sample"
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
     }
@@ -22,13 +22,11 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-
     // navigation library module
     compile project(':library')
 
     // support library - design
-    compile "com.android.support:design:$supportLibVersion"
+    compile 'com.android.support:design:26.1.0'
 
     // view model
     compile 'eu.inloop:androidviewmodel:1.2.3'
