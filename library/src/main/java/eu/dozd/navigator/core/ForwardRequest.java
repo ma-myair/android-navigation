@@ -1,6 +1,6 @@
 package eu.dozd.navigator.core;
 
-import android.support.v4.util.Pair;
+import androidx.core.util.Pair;
 import android.view.View;
 
 import java.util.ArrayList;

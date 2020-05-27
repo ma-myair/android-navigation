@@ -1,8 +1,8 @@
 package eu.dozd.navigator.core;
 
 
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Base class for navigation requests

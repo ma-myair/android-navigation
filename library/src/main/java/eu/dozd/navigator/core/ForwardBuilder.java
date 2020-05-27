@@ -3,12 +3,13 @@ package eu.dozd.navigator.core;
 
 import android.annotation.TargetApi;
 import android.os.Build;
-import android.support.annotation.AnimRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.TransitionRes;
-import android.support.v4.app.Fragment;
-import android.support.v4.util.Pair;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.AnimRes;
+import androidx.annotation.AnimatorRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.TransitionRes;
+import androidx.fragment.app.Fragment;
+import androidx.core.util.Pair;
+import androidx.appcompat.app.AppCompatActivity;
 import android.transition.TransitionInflater;
 import android.view.View;
 
@@ -178,7 +179,8 @@ public class ForwardBuilder extends BaseBuilder<ForwardBuilder, ForwardRequest, 
         return self();
     }
 
-    public ForwardBuilder setCustomAnimations(@AnimRes int enter, @AnimRes int exit) {
+    public ForwardBuilder setCustomAnimations(@AnimatorRes @AnimRes int enter,
+                                              @AnimatorRes @AnimRes int exit) {
         this.enterAnimation = enter;
         this.exitAnimation = exit;
         return self();

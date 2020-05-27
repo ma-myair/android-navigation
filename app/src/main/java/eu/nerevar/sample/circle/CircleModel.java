@@ -1,7 +1,7 @@
 package eu.nerevar.sample.circle;
 
 
-import android.databinding.ObservableInt;
+import androidx.databinding.ObservableInt;
 
 import java.io.Serializable;
 

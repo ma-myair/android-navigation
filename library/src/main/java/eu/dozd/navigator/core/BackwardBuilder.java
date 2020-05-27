@@ -1,8 +1,8 @@
 package eu.dozd.navigator.core;
 
 
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import eu.dozd.navigator.utils.Constants;
 

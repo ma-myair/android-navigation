@@ -1,6 +1,7 @@
 package eu.dozd.navigator.core;
 
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 /**
  * Default backward navigation mode for {@link BaseNavigationController} built by a {@link ForwardBuilder}.
@@ -8,12 +9,12 @@ import android.support.v4.app.Fragment;
 public enum ForwardMode {
 
     /**
-     * Add fragment to container over the current fragment using {@link android.support.v4.app.FragmentTransaction#add(int, Fragment, String)}
+     * Add fragment to container over the current fragment using {@link FragmentTransaction#add(int, Fragment, String)}
      */
     ADDITION,
 
     /**
-     * Replace fragment in container using {@link android.support.v4.app.FragmentTransaction#replace(int, Fragment, String)} with adding to backstack
+     * Replace fragment in container using {@link FragmentTransaction#replace(int, Fragment, String)} with adding to backstack
      */
     REPLACEMENT,
 

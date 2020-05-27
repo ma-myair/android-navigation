@@ -1,9 +1,9 @@
 package eu.dozd.navigator.core;
 
 
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 
 import java.lang.reflect.InvocationTargetException;

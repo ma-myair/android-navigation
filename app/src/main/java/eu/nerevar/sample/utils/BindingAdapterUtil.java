@@ -1,8 +1,8 @@
 package eu.nerevar.sample.utils;
 
 
-import android.databinding.BindingAdapter;
-import android.support.v4.graphics.drawable.DrawableCompat;
+import androidx.databinding.BindingAdapter;
+import androidx.core.graphics.drawable.DrawableCompat;
 import android.widget.ImageView;
 
 public final class BindingAdapterUtil {

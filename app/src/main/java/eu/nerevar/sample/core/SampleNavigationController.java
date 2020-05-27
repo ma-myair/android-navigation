@@ -3,7 +3,7 @@ package eu.nerevar.sample.core;
 
 import eu.dozd.navigator.core.BaseNavigationController;
 
-import static android.support.v4.app.FragmentTransaction.TRANSIT_NONE;
+import static androidx.fragment.app.FragmentTransaction.TRANSIT_NONE;
 
 public class SampleNavigationController extends BaseNavigationController {
 
