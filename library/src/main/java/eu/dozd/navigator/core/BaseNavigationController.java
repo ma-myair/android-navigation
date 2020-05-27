@@ -141,6 +141,15 @@ public abstract class BaseNavigationController implements NavigationController<F
         // create fragment transaction
         final FragmentTransaction ft = request.activity.getSupportFragmentManager().beginTransaction();
 
+        // set custom animations
+        if (request.enterAnimation > 0 && request.exitAnimation > 0) {
+            if (request.popEnterAnimation > 0 && request.popExitAnimation > 0) {
+                ft.setCustomAnimations(request.enterAnimation, request.exitAnimation, request.popEnterAnimation, request.popExitAnimation);
+            } else {
+                ft.setCustomAnimations(request.enterAnimation, request.exitAnimation);
+            }
+        }
+
         // set transition
         if (getFragmentTransition() != TRANSIT_NONE) {
             ft.setTransition(getFragmentTransition());
@@ -158,10 +167,6 @@ public abstract class BaseNavigationController implements NavigationController<F
         // add to backstack ?
         if (request.addToBackStack) {
             ft.addToBackStack(request.root);
-        }
-
-        if (request.enterAnimation > 0 && request.exitAnimation > 0) {
-            ft.setCustomAnimations(request.enterAnimation, request.exitAnimation);
         }
 
         // commit

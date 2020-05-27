@@ -38,6 +38,8 @@ public class ForwardBuilder extends BaseBuilder<ForwardBuilder, ForwardRequest, 
     String root;
     int exitAnimation = 0;
     int enterAnimation = 0;
+    int popExitAnimation = 0;
+    int popEnterAnimation = 0;
 
     ForwardBuilder(@NonNull final AppCompatActivity activity) {
         super(activity);
@@ -183,6 +185,17 @@ public class ForwardBuilder extends BaseBuilder<ForwardBuilder, ForwardRequest, 
                                               @AnimatorRes @AnimRes int exit) {
         this.enterAnimation = enter;
         this.exitAnimation = exit;
+        return self();
+    }
+
+    public ForwardBuilder setCustomAnimations(@AnimatorRes @AnimRes int enter,
+                                              @AnimatorRes @AnimRes int exit,
+                                              @AnimatorRes @AnimRes int popEnter,
+                                              @AnimatorRes @AnimRes int popExit) {
+        this.enterAnimation = enter;
+        this.exitAnimation = exit;
+        this.popEnterAnimation = popEnter;
+        this.popExitAnimation = popExit;
         return self();
     }
 

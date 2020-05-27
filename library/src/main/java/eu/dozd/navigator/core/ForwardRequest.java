@@ -27,6 +27,8 @@ public class ForwardRequest extends BaseRequest {
     final String root;
     final int exitAnimation;
     final int enterAnimation;
+    final int popExitAnimation;
+    final int popEnterAnimation;
 
     ForwardRequest(ForwardBuilder builder) {
         super(builder);
@@ -46,5 +48,7 @@ public class ForwardRequest extends BaseRequest {
         this.root = builder.root;
         this.enterAnimation = builder.enterAnimation;
         this.exitAnimation = builder.exitAnimation;
+        this.popEnterAnimation = builder.popEnterAnimation;
+        this.popExitAnimation = builder.popExitAnimation;
     }
 }
